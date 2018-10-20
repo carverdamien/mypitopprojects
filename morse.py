@@ -1,50 +1,64 @@
-import sys
-word=sys.argv[1]
-output=[]
-dot = 1
-dash = 3
-space_between_dots_and_dashes = 1
-space_between_letters = 3
-space_between_words = 7
-alphabet2morse={
-    'a':[dot,dash],
-    'b':[dash,dot,dot,dot],
-    'c':[dash,dot,dash,dot],
-    'd':[dash,dot,dot],
-    'e':[dot],
-    'f':[dot,dot,dash,dot],
-    'g':[dash,dash,dot],
-    'h':[dot,dot,dot,dot],
-    'i':[dot,dot],
-    'j':[dot,dash,dash,dash],
-    'k':[dash,dot,dash],
-    'l':[dot,dash,dot,dot],
-    'm':[dash,dash],
-    'n':[dash,dot],
-    'o':[dash,dash,dash],
-    'p':[dot,dash,dash,dot],
-    'q':[dash,dash,dot,dash],
-    'r':[dot,dash,dot],
-    's':[dot,dot,dot],
-    't':[dash],
-    'u':[dot,dot,dash],
-    'v':[dot,dot,dot,dash],
-    'w':[dot,dash,dash],
-    'x':[dash,dot,dot,dash],
-    'y':[dash,dot,dash,dash],
-    'z':[dash,dash,dot,dot],
-    '1':[dot,dash,dash,dash,dash],
-    '2':[dot,dot,dash,dash,dash],
-    '3':[dot,dot,dot,dash,dash],
-    '4':[dot,dot,dot,dot,dash],
-    '5':[dot,dot,dot,dot,dot],
-    '6':[dash,dot,dot,dot,dot],
-    '7':[dash,dash,dot,dot,dot],
-    '8':[dash,dash,dash,dot,dot],
-    '9':[dash,dash,dash,dash,dot],
-    '0':[dash,dash,dash,dash,dash]
+DOT = 1
+DASH = 3
+SPACE_BETWEEN_DOTS_AND_DASHES = 1
+SPACE_BETWEEN_LETTERS = 3
+SPACE_BETWEEN_WORDS = 7
+ALPHANUM2MORSE = {
+    'a':[DOT,DASH],
+    'b':[DASH,DOT,DOT,DOT],
+    'c':[DASH,DOT,DASH,DOT],
+    'd':[DASH,DOT,DOT],
+    'e':[DOT],
+    'f':[DOT,DOT,DASH,DOT],
+    'g':[DASH,DASH,DOT],
+    'h':[DOT,DOT,DOT,DOT],
+    'i':[DOT,DOT],
+    'j':[DOT,DASH,DASH,DASH],
+    'k':[DASH,DOT,DASH],
+    'l':[DOT,DASH,DOT,DOT],
+    'm':[DASH,DASH],
+    'n':[DASH,DOT],
+    'o':[DASH,DASH,DASH],
+    'p':[DOT,DASH,DASH,DOT],
+    'q':[DASH,DASH,DOT,DASH],
+    'r':[DOT,DASH,DOT],
+    's':[DOT,DOT,DOT],
+    't':[DASH],
+    'u':[DOT,DOT,DASH],
+    'v':[DOT,DOT,DOT,DASH],
+    'w':[DOT,DASH,DASH],
+    'x':[DASH,DOT,DOT,DASH],
+    'y':[DASH,DOT,DASH,DASH],
+    'z':[DASH,DASH,DOT,DOT],
+    '1':[DOT,DASH,DASH,DASH,DASH],
+    '2':[DOT,DOT,DASH,DASH,DASH],
+    '3':[DOT,DOT,DOT,DASH,DASH],
+    '4':[DOT,DOT,DOT,DOT,DASH],
+    '5':[DOT,DOT,DOT,DOT,DOT],
+    '6':[DASH,DOT,DOT,DOT,DOT],
+    '7':[DASH,DASH,DOT,DOT,DOT],
+    '8':[DASH,DASH,DASH,DOT,DOT],
+    '9':[DASH,DASH,DASH,DASH,DOT],
+    '0':[DASH,DASH,DASH,DASH,DASH]
 }
-for letter in word:
-    output=output+alphabet2morse[letter]
-print(output)
 
+def alphanum2morse(alphanum):
+    for a in alphanum:
+        if a == ' ':
+            for i in range(SPACE_BETWEEN_WORDS):
+                yield False
+        elif a in ALPHANUM2MORSE:
+            for symbol in ALPHANUM2MORSE[a]:
+                for i in range(symbol):
+                    yield True
+                for i in range(SPACE_BETWEEN_DOTS_AND_DASHES):
+                    yield False
+            for i in range(SPACE_BETWEEN_LETTERS):
+                yield False
+        else:
+            # Alphanum unrecognized
+            continue
+
+if __name__ == '__main__':
+    import sys
+    print([i for i in alphanum2morse(sys.argv[1])])
